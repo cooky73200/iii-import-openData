@@ -10,10 +10,12 @@ import tw.iii.Dao.OpenData;
 import tw.iii.Dao.ProductPack;
 import tw.iii.model.Animal;
 import tw.iii.model.Hospital;
+import tw.iii.model.JsonProductRatings;
 import tw.iii.model.Product;
 import tw.iii.model.ProductAttributes;
 import tw.iii.model.ProductImgs;
 import tw.iii.model.ProductOptions;
+import tw.iii.model.ProductRatings;
 import tw.iii.service.AnimalService;
 import tw.iii.utils.HibernateUtil;
 
@@ -22,9 +24,9 @@ public class AnimalAction {
 	static OpenData openData = new OpenData();
 
 	public static void main(String[] args) {
-//		importAnimal();
-//		importHospital();
-		importProduct();
+		importAnimal();
+		importHospital();
+//		importProduct();
 		HibernateUtil.closeSessionFactory();
 
 	}
@@ -36,13 +38,20 @@ public class AnimalAction {
 		try {
 			session.beginTransaction();
 			Product[] products = openData.getProduct();
+			JsonProductRatings[] jsonProductRatings = openData.getJsonProductRatings();
+			
+			int i  = 0;
 			for(Product product : products) {
 				LinkedHashSet<ProductImgs> imgs = productPack.getimgs(product);
 				LinkedHashSet<ProductOptions> options = productPack.getOptions(product);
 				LinkedHashSet<ProductAttributes> atts = productPack.getAttributes(product);
+	
+				LinkedHashSet<ProductRatings> patings = productPack.getRatings(product, jsonProductRatings[i]);
 				product.setTableImgs(imgs);
 				product.setTableOptions(options);
 				product.setTableAttributes(atts);
+				product.setTableRatings(patings);
+				i++;
 			}
 
 			for(Product product:products) {

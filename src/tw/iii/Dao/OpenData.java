@@ -20,9 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import test.TestOpenData;
 import tw.iii.model.Animal;
 import tw.iii.model.Hospital;
+import tw.iii.model.JsonProductRatings;
 import tw.iii.model.Product;
 import tw.iii.model.ProductImgs;
-import tw.iii.model.ProductJ;
 import tw.iii.model.ProductOptions;
 
 public class OpenData {
@@ -38,8 +38,14 @@ public class OpenData {
 	
 	public Product[] getProduct () throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		 InputStream input = TestOpenData.class.getClassLoader().getResourceAsStream("animalpretty.json");
+		 InputStream input = TestOpenData.class.getClassLoader().getResourceAsStream("animalplay.json");
 		Product[] product = mapper.readValue(input, Product[].class);
+		return product;
+	}
+	public JsonProductRatings[] getJsonProductRatings () throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		 InputStream input = TestOpenData.class.getClassLoader().getResourceAsStream("animalplayRatings.json");
+		 JsonProductRatings[] product = mapper.readValue(input, JsonProductRatings[].class);
 		return product;
 	}
 	

@@ -101,6 +101,9 @@ public class Product implements Serializable {
 	public Integer getProductId() {
 		return productId;
 	}
+	
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "product",cascade = CascadeType.ALL)
+	private Set<ProductRatings> tableRatings = new LinkedHashSet<>();
 
 
 	public void setProductId(Integer productId) {
@@ -346,6 +349,17 @@ public class Product implements Serializable {
 	public void setTableAttributes(Set<ProductAttributes> tableAttributes) {
 		this.tableAttributes = tableAttributes;
 	}
+
+
+	public Set<ProductRatings> getTableRatings() {
+		return tableRatings;
+	}
+
+
+	public void setTableRatings(Set<ProductRatings> tableRatings) {
+		this.tableRatings = tableRatings;
+	}
+	
 	
 	
 	
